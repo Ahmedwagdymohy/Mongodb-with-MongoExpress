@@ -31,3 +31,49 @@ docker ps
 
 - Now you can connect to the UI of MongoExpress uing 
 `localhost:8081`
+
+
+
+## 2- Using Docker-Compse:
+- create a `Docker-compose.yml` file and use the following code :
+```yml
+version: '3.8'
+services:
+  mongodb:
+    image: mongo:latest # use the latest image.
+    container_name: mongodb
+    restart: unless-stopped
+    environment: # set required env variables to access mongo
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports:
+      - 27017:27017
+    volumes: # optional to preserve database after container is deleted.
+      - ./database-data:/data/db
+  
+  # Mongo Express Service
+  mongo-express:
+    image: mongo-express:latest # latest image
+    container_name: mongo-express
+    restart: unless-stopped
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: password
+      ME_CONFIG_MONGODB_SERVER: mongodb 
+      # use the name of the mongo container above for server env var.
+      # In our case this is mongodb
+```
+-   save and exit
+```bash
+docker-compose up -d
+```
+- It will show:
+- ![Screenshot from 2024-07-25 19-05-46](https://github.com/user-attachments/assets/a25dce2a-1042-400c-a0c2-a6277e04b04e)
+
+
+
+
+- Now you can connect to the UI of MongoExpress uing 
+`localhost:8081`
