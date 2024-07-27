@@ -18,7 +18,7 @@ docker images
 docker network create NETWORKNAME
 ```
 - Let's start creating 2 Containers for each image :
-> [!NOTE]
+> [!WARNING]
 > Don't forget to change the network name in the command below
 
 ```bash
